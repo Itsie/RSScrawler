@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.0
+# RSScrawler - Version 2.0.1
 # Projekt von https://github.com/rix1337
 
 import cherrypy
@@ -46,7 +46,7 @@ class Server:
   <body>
   <div class="container">
     <form id="rsscrawler" action="https://github.com/rix1337/thanks">
-          <h1>RSScrawler v.2.0.0</h1>
+          <h1>RSScrawler v.2.0.1</h1>
           <button type="submit">Bedanken</button>
     </form>
     <form id="rsscrawler">
@@ -226,7 +226,7 @@ class Server:
 
   @classmethod
   def run(cls, prefix):
-    cherrypy.quickstart(cls(), '/' + prefix, 'cherry.conf')
+    cherrypy.quickstart(cls(), '/' + prefix, os.path.join(os.path.dirname(sys.argv[0]), 'cherry.conf'))
     
   def start(self, port, prefix):
     # Deaktiviere Cherrypy Log

@@ -1,4 +1,4 @@
-#  RSScrawler - Version 2.0.0
+#  RSScrawler - Version 2.0.1
 Projekt von [RiX](https://github.com/rix1337/RSScrawler/commits)
 
 RSScrawler durchsucht MB/SJ nach in .txt Listen hinterlegten Titeln und reicht diese im .crawljob Format an JDownloader weiter.
@@ -34,7 +34,7 @@ Zum **automatischen Lösen von Captchas** empfiehlt sich [9kw.eu](https://www.9k
 
 Optional stehen [fertige Builds für docker, Windows und Synology](#releases) zur Verfügung!
 
-Für OS X bitte beachten:
+Für macOS bitte beachten:
 
 Die fehlenden Module müssen mit:
 
@@ -57,7 +57,7 @@ Die fehlenden Module müssen mit:
 ## Einstellungen:
 *Die RSScrawler.ini liegt im ```Einstellungen``` Ordner und wird (inklusive der Listen) beim ersten Start automatisch generiert. Danach ist der RSScrawler noch nicht einsatzbereit.*
 
-**Zunächst muss der JDownloader-Pfad muss hinterlegt werden, ansonsten beendet sich RSScrawler automatisch mit einem Warnhinweis!**
+**Zunächst muss der JDownloader-Pfad hinterlegt werden, ansonsten beendet sich RSScrawler automatisch mit einem Warnhinweis!**
 
 **Der JDownloader-Pfad und der Port des Webserver kann daher per Startparameter festgelegt werden**
 
