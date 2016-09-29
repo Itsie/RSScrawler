@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.3
+# RSScrawler - Version 2.0.4
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
@@ -26,7 +26,7 @@ Options:
 """
 
 # Globale Variablen
-version = "v.2.0.3"
+version = "v.2.0.4"
 placeholder_filme = False
 placeholder_staffeln = False
 placeholder_serien = False
@@ -855,9 +855,6 @@ if __name__ == "__main__":
     print("┌─────────────────────────────────────────────────────────┐")
     print("│ Programminfo:    RSScrawler " + version + " von RiX             │")
     print("│ Projektseite:    https://github.com/rix1337/RSScrawler  │")
-    print("├─────────────────────────────────────────────────────────┤")
-    print("│ Captchas lösen:  https://www.9kw.eu/register_87296.html │")
-    print("│ Bedanken:        https://github.com/rix1337/thanks      │")
     print("└─────────────────────────────────────────────────────────┘")
     
     # Erstelle fehlenden Einstellungen Ordner
