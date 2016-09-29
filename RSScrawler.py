@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.4
+# RSScrawler - Version 2.0.5
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
@@ -26,7 +26,7 @@ Options:
 """
 
 # Globale Variablen
-version = "v.2.0.4"
+version = "v.2.0.5"
 placeholder_filme = False
 placeholder_staffeln = False
 placeholder_serien = False
@@ -843,11 +843,11 @@ if __name__ == "__main__":
 
     # Lege loglevel über Startparameter fest
     logging.basicConfig(
-        filename=os.path.join(os.path.dirname(sys.argv[0]), 'RSScrawler.log'), format='%(asctime)s - %(message)s', level=logging.__dict__[arguments['--log-level']] if arguments['--log-level'] in logging.__dict__ else logging.INFO
+        filename=os.path.join(os.path.dirname(sys.argv[0]), 'RSScrawler.log'), format=time.strftime("%Y-%m-%d %H:%M:%S") + ' - %(message)s', level=logging.__dict__[arguments['--log-level']] if arguments['--log-level'] in logging.__dict__ else logging.INFO
     )
     console = logging.StreamHandler()
     console.setLevel(logging.__dict__[arguments['--log-level']] if arguments['--log-level'] in logging.__dict__ else logging.INFO)
-    formatter = logging.Formatter('%(asctime)s - %(message)s')
+    formatter = logging.Formatter(time.strftime("%Y-%m-%d %H:%M:%S") + ' - %(message)s')
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
 
@@ -998,10 +998,10 @@ if __name__ == "__main__":
     	port = port = int(rsscrawler.get("port"))
     prefix = rsscrawler.get("prefix")
     print('Der Webserver ist erreichbar unter ' + socket.gethostbyname(socket.gethostname()) +':' + str(port) + '/' + prefix)
-    def f(port, prefix):
+    def g(port, prefix):
         starten = cherry.Server()
         starten.start(port, prefix)
-    p = Process(target=f, args=(port, prefix))
+    p = Process(target=g, args=(port, prefix))
     # Starte Webanwendung
     p.start()
     checkFiles()
