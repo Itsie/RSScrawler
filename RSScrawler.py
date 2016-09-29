@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.2
+# RSScrawler - Version 2.0.3
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
@@ -26,7 +26,7 @@ Options:
 """
 
 # Globale Variablen
-version = "v.2.0.2"
+version = "v.2.0.3"
 placeholder_filme = False
 placeholder_staffeln = False
 placeholder_serien = False
@@ -328,12 +328,6 @@ class MB():
                 
                 # Logge gefundenes Release auch im RSScrawler (Konsole/Logdatei)
                 self.log_info(key + " [Zweisprachig]")
-                # Prüfe ob bereits für die aktuelle Version ein Readme im JDownloader hinterlegt/heruntergeladen wurde:
-                if not os.path.exists(jdownloaderpath + '/folderwatch/rsscrawler.' + version + '.readme-rix.crawljob'):
-                    if not os.path.exists(jdownloaderpath + '/folderwatch/added/rsscrawler.' + version + '.readme-rix.crawljob.1'):
-                        # Erzeuge Crawljob um Readme über JDownloader zur Verfügung zu stellen (einmaliger Vorgang pro Version, solange .crawljob nicht gelöscht wird). Diese Zeilen dürfen nicht entfernt werden!
-                        write_crawljob_file("rsscrawler." + version + ".readme-rix", "RSSCrawler." + version + ".README-RiX", ["https://github.com/rix1337/RSScrawler/archive/master.zip"], jdownloaderpath + "/folderwatch", "")
-                        logging.info("Der Quellcode mit aktuellen Hinweisen (" + version + ") wird einmalig heruntergeladen.")
                 # Nimm nur den ersten validen Downloadlink der auf der Unterseite eines jeden Releases gefunden wurde
                 download_link = [common.get_first(self._get_download_links(value[0], self._hosters_pattern))]
                 # Füge Release nur hinzu, wenn überhaupt ein Link gefunden wurde (erzeuge hierfür einen crawljob)
@@ -448,12 +442,6 @@ class MB():
                     
                     # Logge gefundenes Release auch im RSScrawler (Konsole/Logdatei)
                     self.log_info(key)
-                    # Prüfe ob bereits für die aktuelle Version ein Readme im JDownloader hinterlegt/heruntergeladen wurde:
-                    if not os.path.exists(jdownloaderpath + '/folderwatch/rsscrawler.' + version + '.readme-rix.crawljob'):
-                        if not os.path.exists(jdownloaderpath + '/folderwatch/added/rsscrawler.' + version + '.readme-rix.crawljob.1'):
-                            # Erzeuge Crawljob um Readme über JDownloader zur Verfügung zu stellen (einmaliger Vorgang pro Version, solange .crawljob nicht gelöscht wird). Diese Zeilen dürfen nicht entfernt werden!
-                            write_crawljob_file("rsscrawler." + version + ".readme-rix", "RSSCrawler." + version + ".README-RiX", ["https://github.com/rix1337/RSScrawler/archive/master.zip"], jdownloaderpath + "/folderwatch", "")
-                            logging.info("Der Quellcode mit aktuellen Hinweisen (" + version + ") wird einmalig heruntergeladen.")
 					# Nimm nur den ersten validen Downloadlink der auf der Unterseite eines jeden Releases gefunden wurde
                     download_link = [common.get_first(self._get_download_links(value[0], self._hosters_pattern))]
                     # Füge Release nur hinzu, wenn überhaupt ein Link gefunden wurde (erzeuge hierfür einen crawljob)
@@ -708,10 +696,6 @@ class SJ():
         else:
             self.log_info(title)
             self.db.store(title, 'downloaded')
-            if not os.path.exists(jdownloaderpath + '/folderwatch/rsscrawler.' + version + '.readme-rix.crawljob'):
-                if not os.path.exists(jdownloaderpath + '/folderwatch/added/rsscrawler.' + version + '.readme-rix.crawljob.1'):
-                    write_crawljob_file("rsscrawler." + version + ".readme-rix", "RSSCrawler." + version + ".README-RiX", ["https://github.com/rix1337/RSScrawler/archive/master.zip"], jdownloaderpath + "/folderwatch", "")
-                    logging.info("Der Quellcode mit aktuellen Hinweisen (" + version + ") wird einmalig heruntergeladen.")
             write_crawljob_file(title, title, link,
                                 jdownloaderpath + "/folderwatch", "RSScrawler") and self.added_items.append(title.encode("utf-8"))
 
@@ -846,10 +830,6 @@ class SJregex():
         else:
             self.log_info(title)
             self.db.store(title, 'downloaded')
-            if not os.path.exists(jdownloaderpath + '/folderwatch/rsscrawler.' + version + '.readme-rix.crawljob'):
-                if not os.path.exists(jdownloaderpath + '/folderwatch/added/rsscrawler.' + version + '.readme-rix.crawljob.1'):
-                    write_crawljob_file("rsscrawler." + version + ".readme-rix", "RSSCrawler." + version + ".README-RiX", ["https://github.com/rix1337/RSScrawler/archive/master.zip"], jdownloaderpath + "/folderwatch", "")
-                    logging.info("Der Quellcode mit aktuellen Hinweisen (" + version + ") wird einmalig heruntergeladen.")
             write_crawljob_file(title, title, link,
                                 jdownloaderpath + "/folderwatch", "RSScrawler") and self.added_items.append(title.encode("utf-8"))
 

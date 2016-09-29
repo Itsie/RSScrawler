@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.2
+# RSScrawler - Version 2.0.3
 # Projekt von https://github.com/rix1337
 
 import cherrypy
@@ -9,7 +9,7 @@ from rssconfig import RssConfig
 from RSScrawler import checkFiles
 
 # Globale Variable
-version = "v.2.0.2"
+version = "v.2.0.3"
 
 class Server:
   # Zeige Konfigurationsseite
@@ -49,7 +49,7 @@ class Server:
   <body>
   <div class="container">
     <form id="rsscrawler" action="https://github.com/rix1337/thanks">
-          <h1>RSScrawler v.2.0.2</h1>
+          <h1>RSScrawler v.2.0.3 (Projekt von <a href="https://github.com/rix1337/RSScrawler/commits">RiX</a>)</h1>
           <button type="submit">Bedanken</button>
     </form>
     <form id="rsscrawler">
@@ -94,7 +94,7 @@ class Server:
           <textarea name="mbstaffeln">''' + self.getListe('MB_Staffeln') + '''</textarea>
           <div hinweis="Pro Zeile ein Serientitel"><h3>Serien</h3></div>
           <textarea name="sjserien">''' + self.getListe('SJ_Serien') + '''</textarea>
-          <div hinweis="Pro Zeile ein Serientitel im RegEx-Format. Filter werden ignoriert! <DEUTSCH.*Serien.Titel.*.S01.*.720p.*-GROUP> sucht nach Releases der Gruppe GROUP von Staffel 1 der Serien Titel in 720p auf Deutsch. <Serien.Titel.*> sucht nach allen Releases von Serien Titel (nützlich, wenn man sonst HDTV aussortiert). <Serien.Titel.*.DL.*.720p.*> sucht nach zweisprachigen Releases in 720p von Serien Titel. <ENGLISCH.*Serien.Titel.*.1080p.*> sucht nach englischen Releases in Full-HD von Serien Titel. <(?!(Diese|Andere)).*Serie.*.DL.*.720p.*-(GROUP|ANDEREGROUP)> sucht nach Serie (aber nicht Diese Serie oder Andere Serie), zweisprachig und in 720p und ausschließlich nach Releases von GROUP oder ANDEREGROUP."><h3>Serien (RegEx)</h3></div>
+          <div hinweis="Pro Zeile ein Serientitel im RegEx-Format. Filter werden ignoriert! DEUTSCH.*Serien.Titel.*.S01.*.720p.*-GROUP sucht nach Releases der Gruppe GROUP von Staffel 1 der Serien Titel in 720p auf Deutsch. Serien.Titel.* sucht nach allen Releases von Serien Titel (nützlich, wenn man sonst HDTV aussortiert). Serien.Titel.*.DL.*.720p.* sucht nach zweisprachigen Releases in 720p von Serien Titel. ENGLISCH.*Serien.Titel.*.1080p.* sucht nach englischen Releases in Full-HD von Serien Titel. (?!(Diese|Andere)).*Serie.*.DL.*.720p.*-(GROUP|ANDEREGROUP) sucht nach Serie (aber nicht Diese Serie oder Andere Serie), zweisprachig und in 720p und ausschließlich nach Releases von GROUP oder ANDEREGROUP."><h3>Serien (RegEx)</h3></div>
           <textarea name="sjregex">''' + self.getListe('SJ_Serien_Regex') + '''</textarea>
           <button type="submit">Speichern</button>
     </form>
