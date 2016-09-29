@@ -8,7 +8,7 @@ Hier ausführlich das aufgetretene Problem beschreiben. Muss reproduzierbar sein
 
 -Betriebssystem
 
--Version des RSScrawlers (mindestens 1.9.x)
+-Version des RSScrawlers (mindestens 2.x.x)
 
 ### Logauszug:
 

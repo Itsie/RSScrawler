@@ -1,4 +1,9 @@
-# Created by .ignore support plugin (hsz.mobi)
+# -*- coding: utf-8 -*-
+# RSScrawler - Version 2.0.2
+# Projekt von https://github.com/rix1337
+# Enthält Code von:
+# https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
+
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -48,9 +53,12 @@ target/
 *.ini
 *.txt
 
-# c9.io Files
+# Cloud9
 *c9_invoke_*.py
 
 # Windows-Setupdateien
 setup.py
 setup.ico
+
+# Cherrypy
+*.conf

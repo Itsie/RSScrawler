@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.1
+# RSScrawler - Version 2.0.2
 # Projekt von https://github.com/rix1337
 
 import cherrypy
@@ -7,6 +7,9 @@ import os, sys
 import StringIO
 from rssconfig import RssConfig
 from RSScrawler import checkFiles
+
+# Globale Variable
+version = "v.2.0.2"
 
 class Server:
   # Zeige Konfigurationsseite
@@ -46,7 +49,7 @@ class Server:
   <body>
   <div class="container">
     <form id="rsscrawler" action="https://github.com/rix1337/thanks">
-          <h1>RSScrawler v.2.0.1</h1>
+          <h1>RSScrawler v.2.0.2</h1>
           <button type="submit">Bedanken</button>
     </form>
     <form id="rsscrawler">
@@ -114,7 +117,7 @@ class Server:
       # Nutze String um Log in HTML anzuzeigen
       output = StringIO.StringIO()
       #Füge Meta-Tag hinzu, damit Log regelmäßig neu geladen wird
-      output.write("<meta http-equiv='refresh' content='5'>")
+      output.write("<meta http-equiv='refresh' content='30'>")
       # Jede Zeile der RSScrawler.log wird eingelesen. Letzter Eintrag zuerst, zwecks Übersicht
       for lines in reversed(logfile.readlines()):
         # Der Newline-Charakter \n wird um den HTML Newline-Tag <br> ergänzt
@@ -125,7 +128,8 @@ class Server:
   def speichern(self, jdownloader, port, prefix, interval, pushbulletapi, hoster, mbquality, ignore, historical, crawl3d, enforcedl, crawlseasons, seasonsquality, seasonssource, sjquality, rejectlist, regex):
     with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/RSScrawler.ini'), 'wb') as f:
       # RSScrawler Section:
-      f.write("[RSScrawler]\n")
+      f.write('# RSScrawler.ini (Stand: RSScrawler ' + version + ')\n')
+      f.write("\n[RSScrawler]\n")
       f.write("jdownloader = " + jdownloader.encode('utf-8') + "\n")
       f.write("port = " + port + "\n")
       f.write("prefix = " + prefix.encode('utf-8') + "\n")
@@ -133,7 +137,7 @@ class Server:
       f.write("pushbulletapi = " + pushbulletapi.encode('utf-8') + "\n")
       f.write("hoster = " + hoster.encode('utf-8') + "\n")
       # MB Section:
-      f.write("[MB]\n")
+      f.write("\n[MB]\n")
       f.write("quality = " + mbquality.encode('utf-8') + "\n")
       f.write("ignore = " + ignore.encode('utf-8') + "\n")
       f.write("historical = " + historical.encode('utf-8') + "\n")
@@ -143,7 +147,7 @@ class Server:
       f.write("seasonsquality = " + seasonsquality.encode('utf-8') + "\n")
       f.write("seasonssource = " + seasonssource.encode('utf-8') + "\n")
       # SJ Section:
-      f.write("[SJ]\n")
+      f.write("\n[SJ]\n")
       f.write("quality = " + sjquality.encode('utf-8') + "\n")
       f.write("rejectlist = " + rejectlist.encode('utf-8') + "\n")
       f.write("regex = " + regex.encode('utf-8') + "\n")
@@ -226,7 +230,7 @@ class Server:
 
   @classmethod
   def run(cls, prefix):
-    cherrypy.quickstart(cls(), '/' + prefix, os.path.join(os.path.dirname(sys.argv[0]), 'cherry.conf'))
+    cherrypy.quickstart(cls(), '/' + prefix, os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Web/cherry.conf'))
     
   def start(self, port, prefix):
     # Deaktiviere Cherrypy Log

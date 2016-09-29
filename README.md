@@ -59,7 +59,7 @@ Die fehlenden Module müssen mit:
 
 **Zunächst muss der JDownloader-Pfad hinterlegt werden, ansonsten beendet sich RSScrawler automatisch mit einem Warnhinweis!**
 
-**Der JDownloader-Pfad und der Port des Webserver kann daher per Startparameter festgelegt werden**
+**Der JDownloader-Pfad und der Port des Webserver kann daher per Startparameter festgelegt werden. Standardport ist 9090.**
 
 Sollte kein unmittelbarer Zugriff auf die RSScrawler.ini möglich sein, lässt sich RSScrawler mit den Parametern ```--jd-pfad``` und ```--port``` korrekt starten. Hierbei werden die entsprechenden Einträge der RSScrawler.ini ignoriert.
 

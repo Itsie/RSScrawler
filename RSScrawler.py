@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.1
+# RSScrawler - Version 2.0.2
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
@@ -26,7 +26,7 @@ Options:
 """
 
 # Globale Variablen
-version = "v.2.0.1"
+version = "v.2.0.2"
 placeholder_filme = False
 placeholder_staffeln = False
 placeholder_serien = False
@@ -911,6 +911,15 @@ if __name__ == "__main__":
     # Platzhalterzeile weicht bei Regex Liste ab
         placeholder.write('Ein Titel Pro Zeile - BEACHTE DAS REGEX FORMAT UND DIE HINWEISE')
         placeholder.close()
+    # Cherrypy Konfig um Fehler wegen fehlender Konfig zu unterdrücken
+    if not os.path.exists(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Web')):
+        _mkdir_p(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Web'))
+    if not os.path.isfile(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Web/cherry.conf')):
+        open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Web/cherry.conf'), "a").close()
+        cherryconf = open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Web/cherry.conf'), 'w')
+    # Platzhalterzeile weicht bei Regex Liste ab
+        cherryconf.write("[global]\nserver.socket_host: '0.0.0.0'\nlog.screen: False\n\nlog.access_file: ''\nlog.error_file: ''\n\n[/]\ntools.gzip.on: True")
+        cherryconf.close()
             
     # Setze relativen Dateinamen der Einstellungsdatei    
     einstellungen = os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/RSScrawler.ini')
@@ -953,6 +962,16 @@ if __name__ == "__main__":
             time.sleep(10)
             print('Viel Spass! Beende RSScrawler!')
             sys.exit(0)
+    
+    # Prüfe, ob neue Einstellungen in RSScrawler vorhanden sind
+    configfile = os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/RSScrawler.ini')
+    if not 'port' in open(configfile).read() and not 'prefix' in open(configfile).read() :
+        print "Veraltete Konfigurationsdatei erkannt. Ergänze neue Einstellungen!"
+        with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/RSScrawler.ini'), 'r+') as f:
+            content = f.read()
+            f.seek(0)
+            f.truncate()
+            f.write(content.replace('[RSScrawler]\n', '[RSScrawler]\nport = 9090\nprefix =\n'))
             
     # Definiere die allgemeinen Einstellungen global
     rsscrawler = RssConfig('RSScrawler')
