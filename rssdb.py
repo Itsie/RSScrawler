@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.6
+# RSScrawler - Version 2.0.7
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)

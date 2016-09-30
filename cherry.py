@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.6
+# RSScrawler - Version 2.0.7
 # Projekt von https://github.com/rix1337
 
 import cherrypy
@@ -9,7 +9,7 @@ from rssconfig import RssConfig
 from RSScrawler import checkFiles
 
 # Globale Variable
-version = "v.2.0.6"
+version = "v.2.0.7"
 
 class Server:
   # Zeige Konfigurationsseite
@@ -38,7 +38,13 @@ class Server:
     sjquality = sj.get("quality")
     rejectlist = sj.get("rejectlist")
     regex = str(sj.get("regex"))
-
+    # Erkenne Docker Umgebung
+    if dockerglobal == '1':
+      dockerblocker = ' disabled'
+      dockerhint = 'Docker-Modus: Kann nur per Docker-Run angepasst werden! '
+    else:
+      dockerblocker = ''
+      dockerhint = ''
     return '''<!DOCTYPE html>
 <html>
   <head>
@@ -59,21 +65,18 @@ class Server:
           ''' + version + ''' (Projekt von <a target="_parent" href="https://github.com/rix1337/RSScrawler/commits">RiX</a>)
           <button type="submit">Bedanken</button>
     </form>
-    <form id="rsscrawler">
+    <form id="rsscrawler" enctype="multipart/form-data" method="post" action="logleeren?wert=1">
           <h1>Log</h1>
             <iframe src="./log" width="100%" height="200" frameborder="1">
             Dieser Browser unterstützt keine iFrames. Stattdessen <a target="_parent" href = "/log">/log</a> aufrufen.
           </iframe>
-    </form>
-    <form id="rsscrawler" action="https://www.9kw.eu/register_87296.html">
-          <h1>Captchas</h1>
-          <button type="submit">Captchas automatisch lösen lassen</button>
+          <button type="submit">Leeren</button>
     </form>
     <form id="rsscrawler" enctype="multipart/form-data" method="post" action="speichern">
           <div hinweis="Hier werden sämtliche Einstellungen von RSScrawler hinterlegt.Dieses Script funktioniert nur sinnvoll, wenn Ordnerüberwachung im JDownloader aktiviert ist.Es muss weiterhin unten der richtige JDownloader Pfad gesetzt werden!"><h1>Einstellungen</h1></div>
           <div hinweis="Diese allgemeinen Einstellungen müssen korrekt sein"><h3>Allgemein</div>
-          Pfad des JDownloaders:<div hinweis="Dieser Pfad muss das exakte Verzeichnis des JDownloaders sein, sonst funktioniert das Script nicht!"><input type="text" value="''' + jdownloader +'''" name="jdownloader"/></div>
-          Port:<div hinweis="Hier den Port des Webservers für Einstellungen und Log wählen"><input type="text" name="port" value="''' + port +'''"></div>
+          Pfad des JDownloaders:<div hinweis="''' + dockerhint +'''Dieser Pfad muss das exakte Verzeichnis des JDownloaders sein, sonst funktioniert das Script nicht!"><input type="text" value="''' + jdownloader +'''" name="jdownloader"''' + dockerblocker +'''></div>
+          Port:<div hinweis="''' + dockerhint +'''Hier den Port des Webservers für Einstellungen und Log wählen"><input type="text" name="port" value="''' + port +'''"''' + dockerblocker +'''></div>
           Prefix:<div hinweis="Hier den Prefx des Webservers für Einstellungen und Log wählen. Nützlich für Proxys"><input type="text" name="prefix" value="''' + prefix +'''"></div>
           Suchintervall:<div hinweis="Das Suchintervall in Minuten sollte nicht zu niedrig angesetzt werden um keinen Ban zu riskieren"><input type="text" name="interval" value="''' + interval +'''"></div>
           Pushbullet API-Schlüssel:<div hinweis="Um über hinzugefügte Releases informiert zu werden hier den Pushbullet API-Key eintragen"><input type="text" name="pushbulletapi" value="''' + pushbulletapi +'''"></div>
@@ -92,6 +95,10 @@ class Server:
           Filterliste:<div hinweis="Releases mit diesen Begriffen werden nicht hinzugefügt (durch Kommata getrennt)"><input type="text" name="rejectlist" value="''' + rejectlist +'''"></div>
           Auch per RegEx-Funktion suchen:<div hinweis="Wenn aktiviert werden in einer zweiten Suchdatei Serien nach Regex-Regeln gesucht"><input type="text" name="regex" value="''' + regex +'''"></div>
           <button type="submit">Speichern</button>
+    </form>
+    <form id="rsscrawler" action="https://www.9kw.eu/register_87296.html">
+          <h1>Captchas</h1>
+          <button type="submit">Captchas automatisch lösen lassen</button>
     </form>
     <form id="rsscrawler" enctype="multipart/form-data" method="post" action="listenspeichern">
           <h1>Suchlisten</h1>
@@ -191,6 +198,14 @@ class Server:
   def listenspeichern(self, mbfilme, mbstaffeln, sjserien, sjregex):
     main = RssConfig('RSScrawler')
     prefix = main.get("prefix")
+    if mbfilme == '':
+      mbfilme = 'Ein Titel Pro Zeile - BEACHTE DIE HINWEISE'
+    if mbstaffeln == '':
+      mbstaffeln = 'Ein Titel Pro Zeile - BEACHTE DIE HINWEISE'
+    if sjserien == '':
+      sjserien = 'Ein Titel Pro Zeile - BEACHTE DIE HINWEISE'
+    if sjregex == '':
+      sjregex = 'Ein Titel Pro Zeile - BEACHTE DAS REGEX FORMAT UND DIE HINWEISE'
     with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Listen/MB_Filme.txt'), 'wb') as f:
       f.write(mbfilme.encode('utf-8'))
     with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Listen/MB_Staffeln.txt'), 'wb') as f:
@@ -222,6 +237,56 @@ class Server:
           <h1>Hinweis</h1>
           Um direkt nach den neuen Listeneinträgen zu suchen muss neu gestartet werden
           <button type="submit">Neu starten</button>
+    </form>
+  </div>
+  </body>
+</html>'''
+
+  @cherrypy.expose
+  def logleeren(self, wert):
+    main = RssConfig('RSScrawler')
+    prefix = main.get("prefix")
+    open(os.path.join(os.path.dirname(sys.argv[0]), 'RSScrawler.log'), 'w').close()
+    if wert == '1':
+      return '''<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,maximum-scale=1" name="viewport">
+    <meta content="noindex, nofollow" name="robots">
+    <title>RSScrawler</title>
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAwUExURUxpcQEBAQMDAwAAAAAAAAICAgAAAAAAAAAAAAEBAQQEBAEBAQMDAwEBAQICAgAAAHF9S8wAAAAPdFJOUwBkHuP2K8qzcEYVmzhVineWhWQAAAB4SURBVAjXY2CAAaabChAG4xdzIQjj//9vAiAGZ7L/f+8FINai2fb/q4A0z1uF4/9/g9XYae3/IgBWnLr8fxIDA2u7/zcd+x9AuTXC/x/s/76AgSml0N90yucABt7/nvUfF3+ZwMBqn9T/j+0/UNvBgIhO3o4AuCsAPDssr9goPWoAAABXelRYdFJhdyBwcm9maWxlIHR5cGUgaXB0YwAAeJzj8gwIcVYoKMpPy8xJ5VIAAyMLLmMLEyMTS5MUAxMgRIA0w2QDI7NUIMvY1MjEzMQcxAfLgEigSi4A6hcRdPJCNZUAAAAASUVORK5CYII=", rel="icon" type="image/png">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);.copyright,[hinweis]:before,div,h1,h2,h3,input{text-align:center}*{margin:0;padding:0;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-font-smoothing:antialiased;-o-font-smoothing:antialiased;font-smoothing:antialiased;text-rendering:optimizeLegibility}body{font-family:Roboto,Helvetica,Arial,sans-serif;font-weight:100;font-size:14px;line-height:30px;color:#000;background:#d3d3d3}.container{max-width:800px;width:100%;margin:0 auto;position:relative}[hinweis]:after,[hinweis]:before{position:absolute;bottom:150%;left:50%}#rsscrawler button[type=submit],#rsscrawler iframe,#rsscrawler input[type=text],#rsscrawler textarea{font:400 12px/16px Roboto,Helvetica,Arial,sans-serif}#rsscrawler{background:#F9F9F9;padding:25px;margin:50px 0;box-shadow:0 0 20px 0 rgba(0,0,0,.2),0 5px 5px 0 rgba(0,0,0,.24)}#rsscrawler h1{display:block;font-size:30px;font-weight:300;margin-bottom:10px}#rsscrawler h4{margin:5px 0 15px;display:block;font-size:13px;font-weight:400}fieldset{border:none!important;margin:0 0 10px;min-width:100%;padding:0;width:100%}#rsscrawler iframe,#rsscrawler input[type=text],#rsscrawler textarea{width:100%;border:1px solid #ccc;background:#FFF;margin:0 0 5px;padding:10px}#rsscrawler iframe,#rsscrawler input[type=text]:hover,#rsscrawler textarea:hover{-webkit-transition:border-color .3s ease-in-out;-moz-transition:border-color .3s ease-in-out;transition:border-color .3s ease-in-out;border:1px solid #aaa}#rsscrawler textarea{height:100px;max-width:100%;resize:none}#rsscrawler button[type=submit]{cursor:pointer;width:100%;border:none;background:#333;color:#FFF;margin:0 0 5px;padding:10px;font-size:15px}#rsscrawler button[type=submit]:hover{background:#43A047;-webkit-transition:background .3s ease-in-out;-moz-transition:background .3s ease-in-out;transition:background-color .3s ease-in-out}#rsscrawler button[type=submit]:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}#rsscrawler input:focus,#rsscrawler textarea:focus{outline:0;border:1px solid #aaa}::-webkit-input-placeholder{color:#888}:-moz-placeholder{color:#888}::-moz-placeholder{color:#888}:-ms-input-placeholder{color:#888}[hinweis]{position:relative;z-index:2;cursor:pointer}[hinweis]:after,[hinweis]:before{visibility:hidden;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";filter:progid: DXImageTransform.Microsoft.Alpha(Opacity=0);opacity:0;pointer-events:none}[hinweis]:before{margin-bottom:5px;margin-left:-400px;padding:9px;width:782px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:0;background-color:#000;background-color:hsla(0,0%,20%,.9);color:#fff;content:attr(hinweis);font-size:14px;line-height:1.2}[hinweis]:after{margin-left:-5px;width:0;border-top:5px solid #000;border-top:5px solid hsla(0,0%,20%,.9);border-right:5px solid transparent;border-left:5px solid transparent;content:" ";font-size:0;line-height:0}[hinweis]:hover:after,[hinweis]:hover:before{visibility:visible;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";filter:progid: DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <form id="rsscrawler" enctype="multipart/form-data" method="post" action="../''' + prefix.encode('utf-8') + '''">
+          <h1>Log geleert!</h1>
+          <button type="submit">Zurück</button>
+    </form>
+  </div>
+  </body>
+</html>'''
+    else:
+      return '''<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,maximum-scale=1" name="viewport">
+    <meta content="noindex, nofollow" name="robots">
+    <title>RSScrawler</title>
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAwUExURUxpcQEBAQMDAwAAAAAAAAICAgAAAAAAAAAAAAEBAQQEBAEBAQMDAwEBAQICAgAAAHF9S8wAAAAPdFJOUwBkHuP2K8qzcEYVmzhVineWhWQAAAB4SURBVAjXY2CAAaabChAG4xdzIQjj//9vAiAGZ7L/f+8FINai2fb/q4A0z1uF4/9/g9XYae3/IgBWnLr8fxIDA2u7/zcd+x9AuTXC/x/s/76AgSml0N90yucABt7/nvUfF3+ZwMBqn9T/j+0/UNvBgIhO3o4AuCsAPDssr9goPWoAAABXelRYdFJhdyBwcm9maWxlIHR5cGUgaXB0YwAAeJzj8gwIcVYoKMpPy8xJ5VIAAyMLLmMLEyMTS5MUAxMgRIA0w2QDI7NUIMvY1MjEzMQcxAfLgEigSi4A6hcRdPJCNZUAAAAASUVORK5CYII=", rel="icon" type="image/png">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);.copyright,[hinweis]:before,div,h1,h2,h3,input{text-align:center}*{margin:0;padding:0;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-font-smoothing:antialiased;-o-font-smoothing:antialiased;font-smoothing:antialiased;text-rendering:optimizeLegibility}body{font-family:Roboto,Helvetica,Arial,sans-serif;font-weight:100;font-size:14px;line-height:30px;color:#000;background:#d3d3d3}.container{max-width:800px;width:100%;margin:0 auto;position:relative}[hinweis]:after,[hinweis]:before{position:absolute;bottom:150%;left:50%}#rsscrawler button[type=submit],#rsscrawler iframe,#rsscrawler input[type=text],#rsscrawler textarea{font:400 12px/16px Roboto,Helvetica,Arial,sans-serif}#rsscrawler{background:#F9F9F9;padding:25px;margin:50px 0;box-shadow:0 0 20px 0 rgba(0,0,0,.2),0 5px 5px 0 rgba(0,0,0,.24)}#rsscrawler h1{display:block;font-size:30px;font-weight:300;margin-bottom:10px}#rsscrawler h4{margin:5px 0 15px;display:block;font-size:13px;font-weight:400}fieldset{border:none!important;margin:0 0 10px;min-width:100%;padding:0;width:100%}#rsscrawler iframe,#rsscrawler input[type=text],#rsscrawler textarea{width:100%;border:1px solid #ccc;background:#FFF;margin:0 0 5px;padding:10px}#rsscrawler iframe,#rsscrawler input[type=text]:hover,#rsscrawler textarea:hover{-webkit-transition:border-color .3s ease-in-out;-moz-transition:border-color .3s ease-in-out;transition:border-color .3s ease-in-out;border:1px solid #aaa}#rsscrawler textarea{height:100px;max-width:100%;resize:none}#rsscrawler button[type=submit]{cursor:pointer;width:100%;border:none;background:#333;color:#FFF;margin:0 0 5px;padding:10px;font-size:15px}#rsscrawler button[type=submit]:hover{background:#43A047;-webkit-transition:background .3s ease-in-out;-moz-transition:background .3s ease-in-out;transition:background-color .3s ease-in-out}#rsscrawler button[type=submit]:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}#rsscrawler input:focus,#rsscrawler textarea:focus{outline:0;border:1px solid #aaa}::-webkit-input-placeholder{color:#888}:-moz-placeholder{color:#888}::-moz-placeholder{color:#888}:-ms-input-placeholder{color:#888}[hinweis]{position:relative;z-index:2;cursor:pointer}[hinweis]:after,[hinweis]:before{visibility:hidden;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";filter:progid: DXImageTransform.Microsoft.Alpha(Opacity=0);opacity:0;pointer-events:none}[hinweis]:before{margin-bottom:5px;margin-left:-400px;padding:9px;width:782px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:0;background-color:#000;background-color:hsla(0,0%,20%,.9);color:#fff;content:attr(hinweis);font-size:14px;line-height:1.2}[hinweis]:after{margin-left:-5px;width:0;border-top:5px solid #000;border-top:5px solid hsla(0,0%,20%,.9);border-right:5px solid transparent;border-left:5px solid transparent;content:" ";font-size:0;line-height:0}[hinweis]:hover:after,[hinweis]:hover:before{visibility:visible;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";filter:progid: DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <form id="rsscrawler" enctype="multipart/form-data" method="post" action="../''' + prefix.encode('utf-8') + '''">
+          <h1>Log nicht geleert! Bestätigungscode fehlt.</h1>
+          <button type="submit">Zurück</button>
     </form>
   </div>
   </body>
@@ -291,7 +356,10 @@ class Server:
   def run(cls, prefix):
     cherrypy.quickstart(cls(), '/' + prefix, os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Web/cherry.conf'))
     
-  def start(self, port, prefix):
+  def start(self, port, prefix, docker):
+    # Setzte Variable um Docker-Umgebung zu erkennen
+    global dockerglobal
+    dockerglobal = docker
     # Deaktiviere Cherrypy Log
     cherrypy.log.error_log.propagate = False
     cherrypy.log.access_log.propagate = False

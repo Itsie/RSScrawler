@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.6
+# RSScrawler - Version 2.0.7
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
@@ -28,7 +28,7 @@ Options:
 """
 
 # Globale Variablen
-version = "v.2.0.6"
+version = "v.2.0.7"
 placeholder_filme = False
 placeholder_staffeln = False
 placeholder_serien = False
@@ -979,6 +979,10 @@ if __name__ == "__main__":
     # Entferne Slash, wenn jdownloaderpath darauf endet
     jdownloaderpath = jdownloaderpath[:-1] if jdownloaderpath.endswith('/') else jdownloaderpath
 
+    # Konsolenhinweis bei docker-Parameter
+    if arguments['--docker']:
+       print('Docker-Modus: JDownloader-Pfad und Port können nur per Docker-Run angepasst werden!')
+       
     # Abbrechen, wenn JDownloader Pfad nicht vergeben wurde
     if jdownloaderpath == 'Muss unbedingt vergeben werden!':
         print('Der Pfad des JDownloaders muss unbedingt in der RSScrawler.ini hinterlegt werden.')
@@ -1013,15 +1017,17 @@ if __name__ == "__main__":
     else:
     	port = port = int(rsscrawler.get("port"))
     # Sperre Port, wenn	als Docker gestartet wurde
+    docker = '0'
     if arguments['--docker']:
        port = int('9090')
+       docker = '1'
        
     prefix = rsscrawler.get("prefix")
     print('Der Webserver ist erreichbar unter ' + checkIp() +':' + str(port) + '/' + prefix)
-    def g(port, prefix):
+    def g(port, prefix, docker):
         starten = cherry.Server()
-        starten.start(port, prefix)
-    p = Process(target=g, args=(port, prefix))
+        starten.start(port, prefix, docker)
+    p = Process(target=g, args=(port, prefix, docker))
     # Starte Webanwendung
     p.start()
     checkFiles()
