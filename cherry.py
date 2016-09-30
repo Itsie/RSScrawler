@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.7
+# RSScrawler - Version 2.0.8
 # Projekt von https://github.com/rix1337
 
 import cherrypy
@@ -9,7 +9,7 @@ from rssconfig import RssConfig
 from RSScrawler import checkFiles
 
 # Globale Variable
-version = "v.2.0.7"
+version = "v.2.0.8"
 
 class Server:
   # Zeige Konfigurationsseite
@@ -59,56 +59,56 @@ class Server:
   </head>
   <body>
   <div class="container">
-    <form id="rsscrawler" action="https://github.com/rix1337/thanks">
+    <form id="rsscrawler" action="https://github.com/rix1337/thanks" target="_blank">
           <img src="data:image/png;base64,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" alt=""/>
           <h1>RSScrawler</h1>
-          ''' + version + ''' (Projekt von <a target="_parent" href="https://github.com/rix1337/RSScrawler/commits">RiX</a>)
+          ''' + version + ''' (Projekt von <a href="https://github.com/rix1337/RSScrawler/commits" target="_blank">RiX</a>)
           <button type="submit">Bedanken</button>
     </form>
     <form id="rsscrawler" enctype="multipart/form-data" method="post" action="logleeren?wert=1">
           <h1>Log</h1>
-            <iframe src="./log" width="100%" height="200" frameborder="1">
-            Dieser Browser unterstützt keine iFrames. Stattdessen <a target="_parent" href = "/log">/log</a> aufrufen.
+            <iframe sandbox="allow-forms allow-same-origin allow-pointer-lock allow-scripts allow-popups allow-modals" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="auto" data-title="RSScrawler" src="./log" width="800px" height="240" frameborder="1">
+            Dieser Browser unterstützt keine iFrames. Stattdessen <a href = "/log">/log</a> aufrufen.
           </iframe>
           <button type="submit">Leeren</button>
     </form>
     <form id="rsscrawler" enctype="multipart/form-data" method="post" action="speichern">
-          <div hinweis="Hier werden sämtliche Einstellungen von RSScrawler hinterlegt.Dieses Script funktioniert nur sinnvoll, wenn Ordnerüberwachung im JDownloader aktiviert ist.Es muss weiterhin unten der richtige JDownloader Pfad gesetzt werden!"><h1>Einstellungen</h1></div>
-          <div hinweis="Diese allgemeinen Einstellungen müssen korrekt sein"><h3>Allgemein</div>
+          <div hinweis="Hier werden sämtliche Einstellungen von RSScrawler hinterlegt. Dieses Script funktioniert nur sinnvoll, wenn Ordnerüberwachung im JDownloader aktiviert ist. Es muss weiterhin unten der richtige JDownloader Pfad gesetzt werden!"><h1>Einstellungen</h1></div>
+          <div hinweis="Diese allgemeinen Einstellungen müssen korrekt sein!"><h3>Allgemein</div>
           Pfad des JDownloaders:<div hinweis="''' + dockerhint +'''Dieser Pfad muss das exakte Verzeichnis des JDownloaders sein, sonst funktioniert das Script nicht!"><input type="text" value="''' + jdownloader +'''" name="jdownloader"''' + dockerblocker +'''></div>
-          Port:<div hinweis="''' + dockerhint +'''Hier den Port des Webservers für Einstellungen und Log wählen"><input type="text" name="port" value="''' + port +'''"''' + dockerblocker +'''></div>
-          Prefix:<div hinweis="Hier den Prefx des Webservers für Einstellungen und Log wählen. Nützlich für Proxys"><input type="text" name="prefix" value="''' + prefix +'''"></div>
-          Suchintervall:<div hinweis="Das Suchintervall in Minuten sollte nicht zu niedrig angesetzt werden um keinen Ban zu riskieren"><input type="text" name="interval" value="''' + interval +'''"></div>
-          Pushbullet API-Schlüssel:<div hinweis="Um über hinzugefügte Releases informiert zu werden hier den Pushbullet API-Key eintragen"><input type="text" name="pushbulletapi" value="''' + pushbulletapi +'''"></div>
-          Hoster:<div hinweis="Hier den gewünschten Hoster eintragen (Uploaded oder Share-Online). Möglich sind auch beide (durch Kommata getrennt)"><input type="text" name="hoster" value="''' + hoster +'''"></div>
-          <div hinweis="Dieser Bereich ist für die Suche auf Movie-Blog.org zuständig"><h3>Movie-Blog</h3></div>
-          Auflösung:<div hinweis="Die Qualität, nach der Gesucht wird (1080p, 720p oder 480p)"><input type="text" name="mbquality" value="''' + mbquality +'''"></div>
-          Filterliste:<div hinweis="Releases mit diesen Begriffen werden nicht hinzugefügt (durch Kommata getrennt)"><input type="text" name="ignore" value="''' + ignore +'''"></div>
-          Suchfunktion statt Feed nutzen:<div hinweis="Wenn aktiviert wird die MB-Suchfunktion genutzt (langsamer), da der Feed nur wenige Stunden abbildet"><input type="text" name="historical" value="''' + historical +'''"></div>
-          3D-Releases suchen:<div hinweis="Wenn aktiviert sucht das Script nach 3D Releases (in 1080p), unabhängig von der oben gesetzten Qualität"><input type="text" name="crawl3d" value="''' + crawl3d +'''"></div>
-          Zweisprachige Releases suchen:<div hinweis="Wenn aktiviert sucht das Script zu jedem nicht-zweisprachigen Release (kein DL-Tag im Titel) ein passendes Release in 1080p mit DL Tag. Findet das Script kein Release wird dies im Log vermerkt. Bei der nächsten Ausführung versucht das Script dann erneut ein passendes Release zu finden. Diese Funktion ist nützlich um (durch späteres Remuxen) eine zweisprachige Bibliothek in 720p zu halten."><input type="text" name="enforcedl" value="''' + enforcedl +'''"><br /></div>
-          Staffeln suchen:<div hinweis="Komplette Staffeln von Serien landen zuverlässiger auf MB als auf SJ. Diese Option erlaubt die entsprechende Suche"><input type="text" name="crawlseasons" value="''' + crawlseasons +'''" ></div>
-          Auflösung der Staffeln:<div hinweis="Die Qualität, nach der Staffeln gesucht werden (1080p, 720p oder 480p)"><input type="text" name="seasonsquality" value="''' + seasonsquality +'''"></div>
-          Quellart der Staffeln:<div hinweis="Der Staffel-Releasetyp nach dem gesucht wird"><input type="text" name="seasonssource" value="''' + seasonssource +'''"></div>
-          <div hinweis="Dieser Bereich ist für die Suche auf Serienjunkies.org zuständig"><h3>SerienJunkies</h1></div>
-          <p>Auflösung:<div hinweis="Die Qualität, nach der Gesucht wird (1080p, 720p oder 480p)"><input type="text" name="sjquality" value="''' + sjquality +'''"></div>
-          Filterliste:<div hinweis="Releases mit diesen Begriffen werden nicht hinzugefügt (durch Kommata getrennt)"><input type="text" name="rejectlist" value="''' + rejectlist +'''"></div>
-          Auch per RegEx-Funktion suchen:<div hinweis="Wenn aktiviert werden in einer zweiten Suchdatei Serien nach Regex-Regeln gesucht"><input type="text" name="regex" value="''' + regex +'''"></div>
+          Port:<div hinweis="''' + dockerhint +'''Hier den Port des Webservers für Einstellungen und Log wählen."><input type="text" name="port" value="''' + port +'''"''' + dockerblocker +'''></div>
+          Prefix:<div hinweis="Hier den Prefix des Webservers für Einstellungen und Log wählen (nützlich für Reverse-Proxies)."><input type="text" name="prefix" value="''' + prefix +'''"></div>
+          Suchintervall:<div hinweis="Das Suchintervall in Minuten sollte nicht zu niedrig angesetzt werden um keinen Ban zu riskieren. Minimum sind 3 Minuten!"><input type="text" name="interval" value="''' + interval +'''"></div>
+          Pushbullet API-Schlüssel:<div hinweis="Um über hinzugefügte Releases informiert zu werden, hier den Pushbullet API-Key eintragen."><input type="text" name="pushbulletapi" value="''' + pushbulletapi +'''"></div>
+          Hoster:<div hinweis="Hier den gewünschten Hoster eintragen (Uploaded oder Share-Online). Möglich sind auch beide (durch Kommata getrennt)."><input type="text" name="hoster" value="''' + hoster +'''"></div>
+          <div hinweis="Dieser Bereich ist für die Suche auf Movie-Blog.org zuständig."><h3>Movie-Blog</h3></div>
+          Auflösung:<div hinweis="Die Release-Auflösung, nach der gesucht wird (1080p, 720p oder 480p)."><input type="text" name="mbquality" value="''' + mbquality +'''"></div>
+          Filterliste:<div hinweis="Releases mit diesen Begriffen werden nicht hinzugefügt (durch Kommata getrennt)."><input type="text" name="ignore" value="''' + ignore +'''"></div>
+          Suchfunktion statt Feed nutzen:<div hinweis="Wenn aktiviert, wird die Suchfunktion des Movie-Blog genutzt, da der Feed nur wenige Stunden abbildet."><input type="text" name="historical" value="''' + historical +'''"></div>
+          3D-Releases suchen:<div hinweis="Wenn aktiviert, sucht das Script nach 3D Releases (in 1080p), unabhängig von der oben gesetzten Auflösung."><input type="text" name="crawl3d" value="''' + crawl3d +'''"></div>
+          Zweisprachige Releases suchen:<div hinweis="Wenn aktiviert, sucht das Script zu jedem nicht zweisprachigen Release (kein DL-Tag im Titel) ein passendes Release in 1080p mit DL Tag. Findet das Script kein Release wird dies im DEBUG-Log vermerkt. Bei der nächsten Ausführung versucht das Script dann erneut ein passendes Release zu finden. Diese Funktion ist nützlich um (durch späteres Remuxen) eine zweisprachige Bibliothek in 720p zu halten."><input type="text" name="enforcedl" value="''' + enforcedl +'''"><br /></div>
+          Staffeln suchen:<div hinweis="Komplette Staffeln werden entsprechend der Staffel-Liste auf Movie-Blog gesucht."><input type="text" name="crawlseasons" value="''' + crawlseasons +'''" ></div>
+          Auflösung der Staffeln:<div hinweis="Die Release-Auflösung der Staffeln, nach der gesucht wird (1080p, 720p oder 480p)."><input type="text" name="seasonsquality" value="''' + seasonsquality +'''"></div>
+          Quellart der Staffeln:<div hinweis="Die Quellart der Staffeln, nach der gesucht wird (BluRay, WEB, HDTV, ...)."><input type="text" name="seasonssource" value="''' + seasonssource +'''"></div>
+          <div hinweis="Dieser Bereich ist für die Suche auf Serienjunkies.org zuständig."><h3>SerienJunkies</h1></div>
+          <p>Auflösung:<div hinweis="Die Release-Auflösung, nach der gesucht wird (1080p, 720p oder 480p)."><input type="text" name="sjquality" value="''' + sjquality +'''"></div>
+          Filterliste:<div hinweis="Releases mit diesen Begriffen werden nicht hinzugefügt (durch Kommata getrennt)."><input type="text" name="rejectlist" value="''' + rejectlist +'''"></div>
+          Auch per RegEx-Funktion suchen:<div hinweis="Wenn aktiviert, werden Serien aus der Serien (RegEx)-Liste nach den entsprechenden Regeln gesucht."><input type="text" name="regex" value="''' + regex +'''"></div>
           <button type="submit">Speichern</button>
     </form>
-    <form id="rsscrawler" action="https://www.9kw.eu/register_87296.html">
+    <form id="rsscrawler" action="https://www.9kw.eu/register_87296.html" target="_blank">
           <h1>Captchas</h1>
           <button type="submit">Captchas automatisch lösen lassen</button>
     </form>
     <form id="rsscrawler" enctype="multipart/form-data" method="post" action="listenspeichern">
           <h1>Suchlisten</h1>
-          <div hinweis="Pro Zeile ein Filmtitel"><h3>Filme</h3></div>
+          <div hinweis="Pro Zeile ein Filmtitel."><h3>Filme</h3></div>
           <textarea name="mbfilme">''' + self.getListe('MB_Filme') + '''</textarea>
-          <div hinweis="Pro Zeile ein Serientitel für ganze Staffeln"><h3>Staffeln</h3></div>
+          <div hinweis="Pro Zeile ein Serientitel für ganze Staffeln."><h3>Staffeln</h3></div>
           <textarea name="mbstaffeln">''' + self.getListe('MB_Staffeln') + '''</textarea>
-          <div hinweis="Pro Zeile ein Serientitel"><h3>Serien</h3></div>
+          <div hinweis="Pro Zeile ein Serientitel."><h3>Serien</h3></div>
           <textarea name="sjserien">''' + self.getListe('SJ_Serien') + '''</textarea>
-          <div hinweis="Pro Zeile ein Serientitel im RegEx-Format. Filter werden ignoriert! DEUTSCH.*Serien.Titel.*.S01.*.720p.*-GROUP sucht nach Releases der Gruppe GROUP von Staffel 1 der Serien Titel in 720p auf Deutsch. Serien.Titel.* sucht nach allen Releases von Serien Titel (nützlich, wenn man sonst HDTV aussortiert). Serien.Titel.*.DL.*.720p.* sucht nach zweisprachigen Releases in 720p von Serien Titel. ENGLISCH.*Serien.Titel.*.1080p.* sucht nach englischen Releases in Full-HD von Serien Titel. (?!(Diese|Andere)).*Serie.*.DL.*.720p.*-(GROUP|ANDEREGROUP) sucht nach Serie (aber nicht Diese Serie oder Andere Serie), zweisprachig und in 720p und ausschließlich nach Releases von GROUP oder ANDEREGROUP."><h3>Serien (RegEx)</h3></div>
+          <div hinweis="Pro Zeile ein Serientitel im RegEx-Format. Die Filterliste wird hierbei ignoriert! DEUTSCH.*Serien.Titel.*.S01.*.720p.*-GROUP sucht nach Releases der Gruppe GROUP von Staffel 1 der Serien Titel in 720p auf Deutsch. Serien.Titel.* sucht nach allen Releases von Serien Titel (nützlich, wenn man sonst HDTV aussortiert). Serien.Titel.*.DL.*.720p.* sucht nach zweisprachigen Releases in 720p von Serien Titel. ENGLISCH.*Serien.Titel.*.1080p.* sucht nach englischen Releases in Full-HD von Serien Titel. (?!(Diese|Andere)).*Serie.*.DL.*.720p.*-(GROUP|ANDEREGROUP) sucht nach Serie (aber nicht Diese Serie oder Andere Serie), zweisprachig und in 720p und ausschließlich nach Releases von GROUP oder ANDEREGROUP."><h3>Serien (RegEx)</h3></div>
           <textarea name="sjregex">''' + self.getListe('SJ_Serien_Regex') + '''</textarea>
           <button type="submit">Speichern</button>
     </form>
@@ -131,11 +131,11 @@ class Server:
       # Nutze String um Log in HTML anzuzeigen
       output = StringIO.StringIO()
       #Füge Meta-Tag hinzu, damit Log regelmäßig neu geladen wird
-      output.write("<meta http-equiv='refresh' content='30'>")
+      output.write("<meta http-equiv='refresh' content='15'>\n<p>")
       # Jede Zeile der RSScrawler.log wird eingelesen. Letzter Eintrag zuerst, zwecks Übersicht
       for lines in reversed(logfile.readlines()):
         # Der Newline-Charakter \n wird um den HTML Newline-Tag <br> ergänzt
-        output.write(lines.replace("\n", "<br>\n"))
+        output.write(lines.replace("\n", "</p>\n<p>"))
       return output.getvalue()
 
   @cherrypy.expose
@@ -147,7 +147,11 @@ class Server:
       f.write("jdownloader = " + jdownloader.encode('utf-8') + "\n")
       f.write("port = " + port + "\n")
       f.write("prefix = " + prefix.encode('utf-8') + "\n")
-      f.write("interval = " + interval.encode('utf-8') + "\n")
+      if int(interval.encode('utf-8')) < 3:
+        intervalchecked = '3'
+      else:
+        intervalchecked = interval.encode('utf-8')
+      f.write("interval = " + intervalchecked + "\n")
       f.write("pushbulletapi = " + pushbulletapi.encode('utf-8') + "\n")
       f.write("hoster = " + hoster.encode('utf-8') + "\n")
       # MB Section:

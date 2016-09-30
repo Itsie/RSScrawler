@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.7
+# RSScrawler - Version 2.0.8
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
@@ -28,7 +28,7 @@ Options:
 """
 
 # Globale Variablen
-version = "v.2.0.7"
+version = "v.2.0.8"
 placeholder_filme = False
 placeholder_staffeln = False
 placeholder_serien = False
@@ -143,17 +143,17 @@ def checkFiles():
         content = f.read()
         f.seek(0)
         f.truncate()
-        f.write(content.replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss'))
+        f.write(content.replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', ''))
     with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Listen/MB_Staffeln.txt'), 'r+') as f:
         content = f.read()
         f.seek(0)
         f.truncate()
-        f.write(content.replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss'))
+        f.write(content.replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', ''))
     with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Listen/SJ_Serien.txt'), 'r+') as f:
         content = f.read()
         f.seek(0)
         f.truncate()
-        f.write(content.replace('.', ' ').replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss'))
+        f.write(content.replace('.', ' ').replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', ''))
 
 # MovieBlog
 def notifyPushbulletMB(apikey,text):
