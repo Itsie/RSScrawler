@@ -40,7 +40,7 @@ class Server:
     regex = str(sj.get("regex"))
     # Erkenne Docker Umgebung
     if dockerglobal == '1':
-      dockerblocker = ' disabled'
+      dockerblocker = ' readonly="readonly"'
       dockerhint = 'Docker-Modus: Kann nur per Docker-Run angepasst werden! '
     else:
       dockerblocker = ''
