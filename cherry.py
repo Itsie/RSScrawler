@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.5
+# RSScrawler - Version 2.0.6
 # Projekt von https://github.com/rix1337
 
 import cherrypy
@@ -9,7 +9,7 @@ from rssconfig import RssConfig
 from RSScrawler import checkFiles
 
 # Globale Variable
-version = "v.2.0.5"
+version = "v.2.0.6"
 
 class Server:
   # Zeige Konfigurationsseite

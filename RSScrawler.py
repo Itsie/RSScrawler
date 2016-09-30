@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.5
+# RSScrawler - Version 2.0.6
 # Projekt von https://github.com/rix1337
 # Enthält Code von:
 # https://github.com/dmitryint (im Auftrag von https://github.com/rix1337)
@@ -14,19 +14,21 @@
 
 Usage:
   RSScrawler.py [--testlauf]
+                [--docker]
                 [--port=<PORT>]
                 [--jd-pfad=<JDPATH>]
                 [--log-level=<LOGLEVEL>]
 
 Options:
   --testlauf                Einmalige Ausführung von RSScrawler
+  --docker                  Sperre Pfad und Port auf Docker-Standardwerte (um falsche Einstellungen zu vermeiden)
   --port=<PORT>             Legt den Port des Webservers fest
   --jd-pfad=<JDPFAD>        Legt den Pfad von JDownloader vorab fest (nützlich bei headless-Systemen), diese Option darf keine Leerzeichen enthalten
   --log-level=<LOGLEVEL>    Legt fest, wie genau geloggt wird (CRITICAL, ERROR, WARNING, INFO, DEBUG, NOTSET )
 """
 
 # Globale Variablen
-version = "v.2.0.5"
+version = "v.2.0.6"
 placeholder_filme = False
 placeholder_staffeln = False
 placeholder_serien = False
@@ -118,6 +120,17 @@ def write_crawljob_file(package_name, folder_name, link_text, crawljob_dir, subd
             os.remove(crawljob_file)
         # Vermerke fehlgeschlagenen Schreibvorgang
         return False
+
+def checkIp():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(('10.255.255.255', 0))
+        IP = s.getsockname()[0]
+    except:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
 
 # Prüffunktion ob Punkte, Sonderzeichen und falsche Trennzeichen vorhanden sind
 def checkFiles():
@@ -958,6 +971,9 @@ if __name__ == "__main__":
     	jdownloaderpath = arguments['--jd-pfad']
     else:
     	jdownloaderpath = rsscrawler.get("jdownloader")
+    # Sperre Pfad, wenn	als Docker gestartet wurde
+    if arguments['--docker']:
+       jdownloaderpath = '/jd2'
     # Ersetze Backslash durch Slash (für Windows)
     jdownloaderpath = jdownloaderpath.replace("\\", "/")
     # Entferne Slash, wenn jdownloaderpath darauf endet
@@ -996,8 +1012,12 @@ if __name__ == "__main__":
     	port = int(arguments['--port'])
     else:
     	port = port = int(rsscrawler.get("port"))
+    # Sperre Port, wenn	als Docker gestartet wurde
+    if arguments['--docker']:
+       port = int('9090')
+       
     prefix = rsscrawler.get("prefix")
-    print('Der Webserver ist erreichbar unter ' + socket.gethostbyname(socket.gethostname()) +':' + str(port) + '/' + prefix)
+    print('Der Webserver ist erreichbar unter ' + checkIp() +':' + str(port) + '/' + prefix)
     def g(port, prefix):
         starten = cherry.Server()
         starten.start(port, prefix)
