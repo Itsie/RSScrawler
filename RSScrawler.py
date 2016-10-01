@@ -143,17 +143,17 @@ def checkFiles():
         content = f.read()
         f.seek(0)
         f.truncate()
-        f.write(content.replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', ''))
+        f.write(content.replace('.', ' ').replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', '').replace('(', '').replace('*', '').replace('(', '').replace('|', '').replace('\\', '').replace('?', '').replace('!', '').replace('  ', ' '))
     with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Listen/MB_Staffeln.txt'), 'r+') as f:
         content = f.read()
         f.seek(0)
         f.truncate()
-        f.write(content.replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', ''))
+        f.write(content.replace('.', ' ').replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', '').replace('(', '').replace('*', '').replace('(', '').replace('|', '').replace('\\', '').replace('?', '').replace('!', '').replace('  ', ' '))
     with open(os.path.join(os.path.dirname(sys.argv[0]), 'Einstellungen/Listen/SJ_Serien.txt'), 'r+') as f:
         content = f.read()
         f.seek(0)
         f.truncate()
-        f.write(content.replace('.', ' ').replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', ''))
+        f.write(content.replace('.', ' ').replace(';', ',').replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue').replace('ß', 'ss').replace('(', '').replace(')', '').replace('(', '').replace('*', '').replace('(', '').replace('|', '').replace('\\', '').replace('?', '').replace('!', '').replace('  ', ' '))
 
 # MovieBlog
 def notifyPushbulletMB(apikey,text):
