@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# RSScrawler - Version 2.0.8
+# RSScrawler - Version 2.0.9
 # Projekt von https://github.com/rix1337
 
 import cherrypy
@@ -9,7 +9,7 @@ from rssconfig import RssConfig
 from RSScrawler import checkFiles
 
 # Globale Variable
-version = "v.2.0.8"
+version = "v.2.0.9"
 
 class Server:
   # Zeige Konfigurationsseite
@@ -73,7 +73,8 @@ class Server:
           <button type="submit">Leeren</button>
     </form>
     <form id="rsscrawler" enctype="multipart/form-data" method="post" action="speichern" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
-          <div title="Hier werden sämtliche Einstellungen von RSScrawler hinterlegt. Dieses Script funktioniert nur sinnvoll, wenn Ordnerüberwachung im JDownloader aktiviert ist. Es muss weiterhin unten der richtige JDownloader Pfad gesetzt werden!"><h1>Einstellungen</h1></div>
+          <div title="Hier werden sämtliche Einstellungen von RSScrawler hinterlegt. Dieses Script funktioniert nur sinnvoll, wenn Ordnerüberwachung im JDownloader aktiviert ist. Es muss weiterhin unten der richtige JDownloader Pfad gesetzt werden!">
+          <h1>Einstellungen</h1></div>
           <div title="Diese allgemeinen Einstellungen müssen korrekt sein!"><h3>Allgemein</h3></div>
           Pfad des JDownloaders:<div title="''' + dockerhint +'''Dieser Pfad muss das exakte Verzeichnis des JDownloaders sein, sonst funktioniert das Script nicht!"><input type="text" value="''' + jdownloader +'''" name="jdownloader"''' + dockerblocker +'''></div>
           Port:<div title="''' + dockerhint +'''Hier den Port des Webservers für Einstellungen und Log wählen."><input type="text" name="port" value="''' + port +'''"''' + dockerblocker +'''></div>
@@ -86,7 +87,8 @@ class Server:
           Filterliste:<div title="Releases mit diesen Begriffen werden nicht hinzugefügt (durch Kommata getrennt)."><input type="text" name="ignore" value="''' + ignore +'''"></div>
           Suchfunktion statt Feed nutzen:<div title="Wenn aktiviert, wird die Suchfunktion des Movie-Blog genutzt, da der Feed nur wenige Stunden abbildet (True oder False)."><input type="text" name="historical" value="''' + historical +'''"></div>
           3D-Releases suchen:<div title="Wenn aktiviert, sucht das Script zusätzlich auch nach 3D Releases (in 1080p), unabhängig von der oben gesetzten Auflösung (True oder False)."><input type="text" name="crawl3d" value="''' + crawl3d +'''"></div>
-          Zweisprachige Releases suchen:<div title="Wenn aktiviert, sucht das Script zu jedem nicht zweisprachigen Release (kein DL-Tag im Titel) ein passendes Release in 1080p mit DL Tag. Findet das Script kein Release wird dies im DEBUG-Log vermerkt. Bei der nächsten Ausführung versucht das Script dann erneut ein passendes Release zu finden. Diese Funktion ist nützlich um (durch späteres Remuxen) eine zweisprachige Bibliothek in 720p zu halten (True oder False)."><input type="text" name="enforcedl" value="''' + enforcedl +'''"><br /></div>
+          Zweisprachige Releases suchen:<div title="Wenn aktiviert, sucht das Script zu jedem nicht zweisprachigen Release (kein DL-Tag im Titel) ein passendes Release in 1080p mit DL Tag. Findet das Script kein Release wird dies im DEBUG-Log vermerkt. Bei der nächsten Ausführung versucht das Script dann erneut ein passendes Release zu finden. Diese Funktion ist nützlich um (durch späteres Remuxen) eine zweisprachige Bibliothek in 720p zu halten (True oder False)."><input type="text" name="enforcedl" value="''' + enforcedl +'''">
+          <br /></div>
           Staffeln suchen:<div title="Wenn aktiviert, werden komplette Staffeln entsprechend der Staffel-Liste auf Movie-Blog gesucht. (True oder False)"><input type="text" name="crawlseasons" value="''' + crawlseasons +'''" ></div>
           Auflösung der Staffeln:<div title="Die Release-Auflösung der Staffeln, nach der gesucht wird (1080p, 720p oder 480p)."><input type="text" name="seasonsquality" value="''' + seasonsquality +'''"></div>
           Quellart der Staffeln:<div title="Die Quellart der Staffeln, nach der gesucht wird (BluRay, WEB, HDTV, ...)."><input type="text" name="seasonssource" value="''' + seasonssource +'''"></div>
@@ -108,7 +110,8 @@ class Server:
           <textarea name="mbstaffeln">''' + self.getListe('MB_Staffeln') + '''</textarea>
           <div title="Pro Zeile ein Serientitel."><h3>Serien</h3></div>
           <textarea name="sjserien">''' + self.getListe('SJ_Serien') + '''</textarea>
-          <div title="Pro Zeile ein Serientitel im RegEx-Format. Die Filterliste wird hierbei ignoriert! DEUTSCH.*Serien.Titel.*.S01.*.720p.*-GROUP sucht nach Releases der Gruppe GROUP von Staffel 1 der Serien Titel in 720p auf Deutsch. Serien.Titel.* sucht nach allen Releases von Serien Titel (nützlich, wenn man sonst HDTV aussortiert). Serien.Titel.*.DL.*.720p.* sucht nach zweisprachigen Releases in 720p von Serien Titel. ENGLISCH.*Serien.Titel.*.1080p.* sucht nach englischen Releases in Full-HD von Serien Titel. (?!(Diese|Andere)).*Serie.*.DL.*.720p.*-(GROUP|ANDEREGROUP) sucht nach Serie (aber nicht Diese Serie oder Andere Serie), zweisprachig und in 720p und ausschließlich nach Releases von GROUP oder ANDEREGROUP."><h3>Serien (RegEx)</h3></div>
+          <div title="Pro Zeile ein Serientitel im RegEx-Format. Die Filterliste wird hierbei ignoriert! DEUTSCH.*Serien.Titel.*.S01.*.720p.*-GROUP sucht nach Releases der Gruppe GROUP von Staffel 1 der Serien Titel in 720p auf Deutsch. Serien.Titel.* sucht nach allen Releases von Serien Titel (nützlich, wenn man sonst HDTV aussortiert). Serien.Titel.*.DL.*.720p.* sucht nach zweisprachigen Releases in 720p von Serien Titel. ENGLISCH.*Serien.Titel.*.1080p.* sucht nach englischen Releases in Full-HD von Serien Titel. (?!(Diese|Andere)).*Serie.*.DL.*.720p.*-(GROUP|ANDEREGROUP) sucht nach Serie (aber nicht Diese Serie oder Andere Serie), zweisprachig und in 720p und ausschließlich nach Releases von GROUP oder ANDEREGROUP.">
+          <h3>Serien (RegEx)</h3></div>
           <textarea name="sjregex">''' + self.getListe('SJ_Serien_Regex') + '''</textarea>
           <button type="submit">Speichern</button>
     </form>
@@ -116,7 +119,7 @@ class Server:
           <button type="submit">Neu starten</button>
     </form>
   </div>
-    <iframe name="speichernFrame" width="0" height="0" style="display: none;"></iframe>
+  <iframe name="speichernFrame" width="0" height="0" style="display: none;"></iframe>
   </body>
 </html>'''
 
